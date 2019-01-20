@@ -27,7 +27,7 @@ export default new Router({
     {
       path: '/Documents',
       name: 'Documents',
-      component: Comming
+      component: Documents
     },
     {
       path: '/Tools',
