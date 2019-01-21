@@ -1,5 +1,5 @@
 <template>
-  <div class="col-xs-2" style="">
+  <div class="col-xs-2 sidebar" style="">
     <div class="version text-center">
       <div class="dropdown center-block" style="width: 80%;">
         <button class="btn dropdown-toggle" data-toggle="dropdown" style="width: 100%">
@@ -8,13 +8,10 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <a id="action-1" href="#">IoTDB v0.7</a>
+            <a id="action-1" href="#">IoTDB v0.6</a>
           </li>
           <li>
-            <a href="#">IoTDB v0.7</a>
-          </li>
-          <li>
-            <a href="#">IoTDB v0.7</a>
+            <a href="#">IoTDB v0.5</a>
           </li>
         </ul>
       </div>
@@ -100,13 +97,14 @@
     },
     methods: {
       change_navi_content: function (event) {
+        let version = this.$route.params.version;
         var chapter = event.currentTarget.className;
         var section = event.currentTarget.innerText;
         var x = document.getElementById("bread_chapter");
         var y = document.getElementById("text_content");
         x.innerHTML = "<li><a style='color:#fcac45;'>IoTDB 0.7</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
           chapter + "</a></li>" + "<li><a style='color:#fcac45;'>" + section + "</a></li>";
-        y.innerText = "IoTDB" + chapter + section;
+        y.innerText = version + "IoTDB" + chapter + section;
       }
 
     }
@@ -118,6 +116,17 @@
   .col-xs-2 {
     background: #222222;
     padding: 0 0;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   }
 
   .dropdown {

@@ -29,6 +29,9 @@
   export default {
     name: "Documents",
     data() {
+      return{
+        section:'fuck',
+      }
     },
     components: {
       'footer_bar': Footer,
@@ -54,7 +57,7 @@
     /*height: 50px;*/
   }
 
-  .fixed-middle>ul{
+  .fixed-middle > ul {
     height: 36px;
   }
 
@@ -68,6 +71,10 @@
 
   .find-mistake {
     text-align: center;
+    position: fixed;
+    left:20%;
+    right: 0;
+    bottom: 70px;
   }
 
 

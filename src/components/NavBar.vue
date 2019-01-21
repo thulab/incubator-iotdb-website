@@ -76,8 +76,8 @@
     data() {
       return {
         "Documents":[
-          {"url": "/Documents", "content": "Latest Release"},
-          {"url": "/Comming", "content": "Older Versions and Other resources"},
+          {"url": "/Documents/latest", "content": "Latest Release"},
+          {"url": "/Documents/0.6", "content": "Older Versions and Other resources"},
           {"url": "/Comming", "content": "Frequently Asked Questions"}
         ],
         "Tools":[

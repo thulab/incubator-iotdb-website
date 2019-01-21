@@ -16,7 +16,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'fuck',
       component: Home
     },
     {
@@ -25,7 +25,7 @@ export default new Router({
       component: Download
     },
     {
-      path: '/Documents',
+      path: '/Documents/:version',
       name: 'Documents',
       component: Documents
     },
