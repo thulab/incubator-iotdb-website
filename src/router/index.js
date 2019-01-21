@@ -22,7 +22,7 @@ export default new Router({
     {
       path: '/Download',
       name: 'Download',
-      component: Comming
+      component: Download
     },
     {
       path: '/Documents',
@@ -32,7 +32,7 @@ export default new Router({
     {
       path: '/Tools',
       name: 'Tools',
-      component: Comming
+      component: Tools
     },
     {
       path: '/Community',
