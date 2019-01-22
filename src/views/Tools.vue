@@ -1,329 +1,201 @@
 <template>
-  <div class="backgroundImage">
-    <div class="main container" style="width:95%">
+  <div class="background-image">
+    <div class="container">
       <br>
       <div class="row">
-        <!--<div class="row" style="height:0px;padding-bottom:25%;">-->
-        <div class="col-xs-6">
-          <div class="backgroundDiv">
+        <div class="col-lg-7">
+          <div class="scene">
             <img src="../assets/img/tools.jpg">
           </div>
         </div>
-        <div class="col-xs-6">
-          <div class="introductionDiv">
-            <p style="color:white">Introduction of copywriting(coming soon...)</p>
+        <div class="col-lg-5">
+          <div class="introduction">
+            <p><b>IoTDB</b> is an open-source time series database developed by THULab(link) which is written in JAVA. In order
+              to enable IoTDB to more fully support the application of time series data, we have developed a few tools
+              for IoTDB expansion.
+            </p>
+            <ul>
+              <li>SQL-like client(Cli) is developed for users to interact with IoTDB engine in command line.</li>
+              <li>Grafana is developed to visualize time series data in IoTDB using Grafana.</li>
+              <li>IoTDB can be also efficiently integrated with other computing frameworks in big data ecosystems, like
+                Hadoop and Spark, for advanced data analytics. That is why we offer you hadoop and spark connector.
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <br>
-      <hr/>
-      <br>
-      <div class="row">
-        <div class="col-xs-3">
-          <div class="toolDiv sidebar thumbnail">
-            <div class="sidebar-module sidebar-module-inset">
-              <h1 style="color: white;text-align:center">IoTDB-Cli</h1>
-              <p style="color: white;text-align:center;font-size: large">Client tool used to read and <br>write data
-                from IoTDB</p>
-              <br>
-              <hr/>
-              <!-- 标准的按钮 -->
-              <div style="text-align:center; margin-top:30px;">
-                <button data-toggle="modal" data-target="#myModal" type="button"
-                        class="toolDownloadButton btn btn-default">
-                  Download
-                </button>
-                <!-- 模态框（Modal） -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                          aria-hidden="true">&times;</span></button>
-                        <h2 class="modal-title">Coming soon...</h2>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal -->
+      <hr>
+      <div class="tools">
+        <div class="row">
+          <div v-for="tool in Tools">
+            <div class="col-md-6 col-lg-3">
+              <div class="tool thumbnail">-->
+                <h3>{{tool.header}}</h3>
+                <div class="content">
+                  <p v-html="tool.content"></p>
                 </div>
-                <br>
-                <br>
-              </div>
-              <div style="text-align:center;margin-top:10px;">
-                <button data-toggle="modal" data-target="#myModal" type="button"
-                        class="toolDocumentationButton btn btn-default">
-                  <font color="white">Documentation</font>
-                </button>
-                <!-- 模态框（Modal） -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                          aria-hidden="true">&times;</span></button>
-                        <h2 class="modal-title">Coming soon...</h2>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal -->
+                <hr/>
+                <div class="tool-download">
+                  <button data-toggle="modal" data-target="#myModal" type="button"
+                          class="tool-download-button btn btn-default">
+                    <p style="font-size: medium">Download</p>
+                  </button>
+                  <br>
+                  <br>
                 </div>
-                <br>
-                <br>
+                <div class="tool-documentation">
+                  <button data-toggle="modal" data-target="#myModal" type="button"
+                          class="tool-documentation-button btn btn-default">
+                    <p style="color: white; font-size: medium">Documentation</p>
+                  </button>
+                  <br>
+                  <br>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-xs-3">
-          <div class="toolDiv sidebar thumbnail">
-            <div class="sidebar-module sidebar-module-inset">
-              <h1 style="color: white;text-align:center">Grafana Connector</h1>
-              <p style="color: white;text-align:center;font-size: large"">Time Series Data<br>Visualization</p>
-              <br>
-              <hr/>
-              <!-- 标准的按钮 -->
-              <div style="text-align:center;margin-top:30px;">
-                <button data-toggle="modal" data-target="#myModal" type="button"
-                        class="toolDownloadButton btn btn-default">
-                  Download
-                </button>
-                <!-- 模态框（Modal） -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                          aria-hidden="true">&times;</span></button>
-                        <h2 class="modal-title">Coming soon...</h2>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal -->
-                </div>
-                <br>
-                <br>
-              </div>
-              <div style="text-align:center;margin-top:10px;">
-                <button data-toggle="modal" data-target="#myModal" type="button"
-                        class="toolDocumentationButton btn btn-default">
-                  <font color="white">Documentation</font>
-                </button>
-                <!-- 模态框（Modal） -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                          aria-hidden="true">&times;</span></button>
-                        <h2 class="modal-title">Coming soon...</h2>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal -->
-                </div>
-                <br>
-                <br>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-3">
-          <div class="toolDiv sidebar thumbnail">
-            <div class="sidebar-module sidebar-module-inset">
-              <h1 style="color: white;text-align:center">Hadoop Connector</h1>
-              <p style="color: white;text-align:center;font-size: large">Connector tool to use Hadoop<br>to process data
-                from IoTDB </p>
-              <br>
-              <hr/>
-              <!-- 标准的按钮 -->
-              <div style="text-align:center;margin-top:30px;">
-                <button data-toggle="modal" data-target="#myModal" type="button"
-                        class="toolDownloadButton btn btn-default">
-                  Download
-                </button>
-                <!-- 模态框（Modal） -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                          aria-hidden="true">&times;</span></button>
-                        <h2 class="modal-title">Coming soon...</h2>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal -->
-                </div>
-                <br>
-                <br>
-              </div>
-              <div style="text-align:center;margin-top:10px;">
-                <button data-toggle="modal" data-target="#myModal" type="button"
-                        class="toolDocumentationButton btn btn-default">
-                  <font color="white">Documentation</font>
-                </button>
-                <!-- 模态框（Modal） -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                          aria-hidden="true">&times;</span></button>
-                        <h2 class="modal-title">Coming soon...</h2>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal -->
-                </div>
-                <br>
-                <br>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-3">
-          <div class="toolDiv sidebar thumbnail">
-            <div class="sidebar-module sidebar-module-inset">
-              <h1 style="color: white;text-align:center">Spark Connector</h1>
-              <p style="color: white;text-align:center;font-size: large">Connector tool to use spark<br>to process data
-                from IoTDB </p>
-              <br>
-              <hr/>
-              <!-- 标准的按钮 -->
-              <div style="text-align:center;margin-top:30px;">
-                <!--<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"-->
-                <!--style="border-radius: 20px;width: 80%;background: #fcac45;font-size: medium;font-weight: bold;border: 2px solid #fcac45;">-->
-                <button data-toggle="modal" data-target="#myModal" type="button"
-                        class="toolDownloadButton btn btn-default">
-                  Download
-                </button>
-                <!-- 模态框（Modal） -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                          aria-hidden="true">&times;</span></button>
-                        <h2 class="modal-title">Coming soon...</h2>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal -->
-                </div>
-                <br>
-                <br>
-              </div>
-              <div style="text-align:center;margin-top:10px;">
-                <button data-toggle="modal" data-target="#myModal" type="button"
-                        class="toolDocumentationButton btn btn-default">
-                  <font color="white">Documentation</font>
-                </button>
-                <!-- 模态框（Modal） -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                          aria-hidden="true">&times;</span></button>
-                        <h2 class="modal-title">Coming soon...</h2>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal -->
-                </div>
-                <br>
-                <br>
-              </div>
+      </div>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+           aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+              <h2 class="modal-title">Coming soon...</h2>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <hr>
+    <footer-bar/>
   </div>
 </template>
 
 <script>
+  import Footer from "../components/FooterFixed"
 
-    export default {
-      name: "Tools",
-      data() {
-        return {
-          msg: 'Welcome to Tools Page'
-        }
+  export default {
+    name: "Tools",
+    components: {
+      'footer-bar': Footer
+    },
+    data() {
+      return {
+        "Tools": [
+          {
+            "header": "IoTDB-Cli",
+            "content": "Client tool used to read and <br/>write data from IoTDB",
+            "Download": "",
+            "Documentation": ""
+          },
+          {
+            "header": "Grafana Connector",
+            "content": "Time Series Data<br/>Visualization",
+            "Download": "",
+            "Documentation": ""
+          },
+          {
+            "header": "Hadoop Connector",
+            "content": "Connector tool to use Hadoop<br/>to process data from IoTDB",
+            "Download": "",
+            "Documentation": ""
+          },
+          {
+            "header": "Spark Connector",
+            "content": "Connector tool to use spark<br/>to process data",
+            "Download": "",
+            "Documentation": ""
+          }
+        ]
       }
-    }
-
+    },
+    methods: {}
+  }
 </script>
 
 <style scoped>
-  h1, h2 {
-    font-weight: normal;
+
+  .background-image {
+    background: antiquewhite no-repeat;
   }
 
-  div > p {
-    margin-top: 10px;
-  }
-
-  .feature > div {
-
-  }
-
-  p > img {
-    width: 50px;
-    height: 50px;
-  }
-
-  .col-xs-4 > p {
-    font-size: smaller;
-  }
-
-  .feature > .col-xs-4 {
-    border-bottom: 2px solid #eff0f8;
-    padding: 10px;
-    float: none;
-    display: table-cell;
-    vertical-align: top;
-
-  }
-
-  .backgroundImage {
-/*    background: url('../assets/img/background.jpg') no-repeat;*/
-    /*background-size: 100px auto;*/
-  }
-
-  .backgroundDiv {
+  .scene {
     border: 2px solid;
-    border-radius: 20px;
-    -moz-border-radius: 20px; /* Old Firefox */
-    margin: 10px 10px 10px 10px;
+    border-radius: 10px;
     padding: 10px;
     background: white;
+    float: left;
   }
 
-  .backgroundDiv > img {
+  .scene > img {
     width: 100%;
     height: auto;
     display: block;
   }
 
-  .introductionDiv {
-    border: 2px solid;
-    border-radius: 20px;
-    -moz-border-radius: 20px; /* Old Firefox */
-    margin: 10px 10px 10px 10px;
-    padding: 10px;
-    background: black;
+  .introduction {
+    border: 0px solid;
+    border-radius: 10px;
+    margin: 2px 2px 2px 2px;
+    float: right;
+    height: 100%;
   }
 
-  .toolDiv {
-    border: 6px solid;
-    border-radius: 20px;
-    -moz-border-radius: 20px; /* Old Firefox */
+  .introduction > p {
+    color: black;
+    font-size: medium;
+  }
+
+  .introduction > ul {
+    color: black;
+    font-size: medium;
+  }
+
+  .tool {
+    text-align: center;
+    border: 2px solid;
+    border-radius: 10px;
     background: black;
     padding: 20px 20px;
-    width: 100%;
+    width: 98%;
   }
 
-  .toolDownloadButton {
+  .content {
+    height: 80px;
+  }
+
+  .content > p {
+    color: white;
+    text-align: center;
+    font-size: x-small;
+  }
+
+  .tool > h3 {
+    color: white;
+    text-align: center;
+    height: 40px;
+  }
+
+  .tool > p {
+    color: white;
+    text-align: center;
+    font-size: x-small;
+  }
+
+  .tool-download {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .tool-documentation {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .tool-download-button {
     border-radius: 20px;
     width: 80%;
     background: #fcac45;
@@ -332,7 +204,7 @@
     border: 2px solid #fcac45;
   }
 
-  .toolDocumentationButton {
+  .tool-documentation-button {
     border-radius: 20px;
     width: 80%;
     background: black;
@@ -340,4 +212,24 @@
     font-weight: bold;
     border: 2px solid #fcac45;
   }
+
+  .tools .col-lg-3 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .tools .col-lg-3 p {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .tools h2 {
+    font-weight: normal;
+  }
+
+  .tools h1 {
+    font-weight: normal;
+  }
+
+
 </style>
