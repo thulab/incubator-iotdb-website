@@ -5,52 +5,62 @@
         <div class="col-xs-2 sidebar" style="">
           <div class="version text-center">
             <!--<div class="dropdown center-block" style="width: 80%;">-->
-              <!--<button class="btn dropdown-toggle" data-toggle="dropdown" style="width: 100%">-->
-                <!--IoTDB v0.7-->
-                <!--<b class="caret right-block"></b>-->
-              <!--</button>-->
-              <!--<ul class="dropdown-menu">-->
-                <!--<li>-->
-                  <!--<a id="action-1" href="#">IoTDB v0.6</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                  <!--<a href="#">IoTDB v0.5</a>-->
-                <!--</li>-->
-              <!--</ul>-->
+            <!--<button class="btn dropdown-toggle" data-toggle="dropdown" style="width: 100%">-->
+            <!--IoTDB v0.7-->
+            <!--<b class="caret right-block"></b>-->
+            <!--</button>-->
+            <!--<ul class="dropdown-menu">-->
+            <!--<li>-->
+            <!--<a id="action-1" href="#">IoTDB v0.6</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a href="#">IoTDB v0.5</a>-->
+            <!--</li>-->
+            <!--</ul>-->
             <!--</div>-->
-          <select v-model="selectedVersionUrl" id="select-version">
-            <option class="version-message" v-for="iotdbVersion in downloadVersionList" :value="iotdbVersion.url">{{iotdbVersion.text}}</option>
-          </select>
+            <select v-model="selectedVersionUrl" id="select-version">
+              <option class="version-message" v-for="iotdbVersion in downloadVersionList" :value="iotdbVersion.url">
+                {{iotdbVersion.text}}
+              </option>
+            </select>
           </div>
           <div class="content center-block" style="width: 14%;overflow: auto">
-            <h4>Overview</h4>
-            <ul class="list-group">
-              <li class="overview" v-for="item in Chapter1" @click="change_navi_content($event)">{{item.section}}</li>
-            </ul>
-            <h4>Chapter2</h4>
-            <ul class="list-group">
-              <li class="chapter2" v-for="item in Chapter2" @click="change_navi_content($event)">{{item.section}}</li>
-            </ul>
-            <h4>Chapter3</h4>
-            <ul class="list-group">
-              <li class="chapter3" v-for="item in Chapter3" @click="change_navi_content($event)">{{item.section}}</li>
-            </ul>
-            <h4>Chapter4</h4>
-            <ul class="list-group">
-              <li class="chapter4" v-for="item in Chapter4" @click="change_navi_content($event)">{{item.section}}</li>
-            </ul>
-            <h4>Chapter5</h4>
-            <ul class="list-group">
-              <li class="chapter5" v-for="item in Chapter5" @click="change_navi_content($event)">{{item.section}}</li>
-            </ul>
-            <h4>Chapter6</h4>
-            <ul class="list-group">
-              <li class="chapter6" v-for="item in Chapter6" @click="change_navi_content($event)">{{item.section}}</li>
-            </ul>
-            <h4>Chapter7</h4>
-            <ul class="list-group">
-              <li class="chapter7" v-for="item in Chapter7" @click="change_navi_content($event)">{{item.section}}</li>
-            </ul>
+            <div v-for="(chap,index) in ver7doc" :key="index">
+              <h4>{{chap.name}}</h4>
+              <ul class="list-group">
+                <li :class="chap.name" v-for="(item,index) in chap.Chapter" :key="index"
+                    @click="change_navi_content($event)">{{item.section}}
+                </li>
+              </ul>
+            </div>
+            <!--<h4>Overview</h4>-->
+            <!--<ul class="list-group">-->
+            <!--<li class="overview" v-for="item in Chapter1" @click="change_navi_content($event)">{{item.section}}</li>-->
+            <!--</ul>-->
+            <!--<h4>Chapter2</h4>-->
+            <!--<ul class="list-group">-->
+            <!--<li class="chapter2" v-for="item in Chapter2" @click="change_navi_content($event)">{{item.section}}</li>-->
+            <!--</ul>-->
+            <!--<h4>Chapter3</h4>-->
+            <!--<ul class="list-group">-->
+            <!--<li class="chapter3" v-for="item in Chapter3" @click="change_navi_content($event)">{{item.section}}</li>-->
+            <!--</ul>-->
+            <!--<h4>Chapter4</h4>-->
+            <!--<ul class="list-group">-->
+            <!--<li class="chapter4" v-for="item in Chapter4" @click="change_navi_content($event)">{{item.section}}</li>-->
+            <!--</ul>-->
+            <!--<h4>Chapter5</h4>-->
+            <!--<ul class="list-group">-->
+            <!--<li class="chapter5" v-for="item in Chapter5" @click="change_navi_content($event)">{{item.section}}</li>-->
+            <!--</ul>-->
+            <!--<h4>Chapter6</h4>-->
+            <!--<ul class="list-group">-->
+            <!--<li class="chapter6" v-for="item in Chapter6" @click="change_navi_content($event)">{{item.section}}</li>-->
+            <!--</ul>-->
+            <!--<h4>Chapter7</h4>-->
+            <!--<ul class="list-group">-->
+            <!--<li class="chapter7" v-for="item in Chapter7" @click="change_navi_content($event)">{{item.section}}</li>-->
+            <!--</ul>-->
 
           </div>
         </div>
@@ -62,7 +72,8 @@
             <li><a style='color:#fcac45;'>What is IoTDB</a></li>
           </ul>
           <div id="text_content" class="text_field">
-            <vue-markdown id="markdown-area" :source="version7[active]" :toc="true" :toc-anchor-link="true"></vue-markdown>
+            <vue-markdown id="markdown-area" :source="version7[active]" :toc="true"
+                          :toc-anchor-link="true"></vue-markdown>
           </div>
           <div class="find-mistake">
             <p>This documentation is open source. Find mistakes? Want to contribute? Go for it.</p>
@@ -85,47 +96,70 @@
     data() {
       return {
         downloadVersionList: [
-          { text: 'iotdb-v7.0', url: 'https://github.com/apache/incubator-iotdb'},
-          { text: 'iotdb-v8.0', url: 'https://github.com/apache/incubator-iotdb' },
-          { text: 'iotdb-v9.0', url: 'https://github.com/apache/incubator-iotdb' }
-          ],
-        Chapter1: [
-          {section: "What is IoTDB"},
-          {section: "Architecture"},
-          {section: "Scenario"},
-          {section: "Features"}
+          {text: 'iotdb-v7.0', url: 'https://github.com/apache/incubator-iotdb'},
+          {text: 'iotdb-v8.0', url: 'https://github.com/apache/incubator-iotdb'},
+          {text: 'iotdb-v9.0', url: 'https://github.com/apache/incubator-iotdb'}
         ],
-        Chapter2: [
-          {section: "Build"},
-          {section: "Configure"},
-          {section: "Start"},
-        ],
-        Chapter3: [
-          {section: "Key Concepts and Terminology"},
-          {section: "Data Type"},
-          {section: "Coding"},
-          {section: "Compression"},
-        ],
-        Chapter4: [
-          {section: "Scenario Description and Sample Data"},
-          {section: "Data Model Selection and Creation"},
-          {section: "Data Access"},
-          {section: "Data Query"},
-        ],
-        Chapter5: [
-          {section: "Deployment"},
-          {section: "Configuration"},
-          {section: "System log"},
-          {section: "Data Management"},
-          {section: ""}
-        ],
-        Chapter6: [
-          {section: "Cli/shell tool"},
-          {section: "Spark"},
-        ],
-        Chapter7: [
-          {section: "IoTDB Query Statement"},
-          {section: "Reference"},
+        ver7doc: [
+          {
+            Chapter: [
+              {section: "What is IoTDB"},
+              {section: "Architecture"},
+              {section: "Scenario"},
+              {section: "Features"}
+            ],
+            name: "overview"
+          },
+          {
+            Chapter: [
+              {section: "Build"},
+              {section: "Configure"},
+              {section: "Start"},
+            ],
+            name: "chapter2"
+          },
+          {
+            Chapter: [
+              {section: "Key Concepts and Terminology"},
+              {section: "Data Type"},
+              {section: "Coding"},
+              {section: "Compression"},
+            ],
+            name: "chapter3"
+          },
+          {
+            Chapter: [
+              {section: "Scenario Description and Sample Data"},
+              {section: "Data Model Selection and Creation"},
+              {section: "Data Access"},
+              {section: "Data Query"},
+            ],
+            name: "chapter4"
+          },
+          {
+            Chapter: [
+              {section: "Deployment"},
+              {section: "Configuration"},
+              {section: "System log"},
+              {section: "Data Management"},
+              {section: ""}
+            ],
+            name: "chapter5"
+          },
+          {
+            Chapter: [
+              {section: "Cli/shell tool"},
+              {section: "Spark"},
+            ],
+            name: "chapter6"
+          },
+          {
+            Chapter: [
+              {section: "IoTDB Query Statement"},
+              {section: "Reference"},
+            ],
+            name: "chapter7"
+          }
         ],
 
         version7: {
@@ -146,7 +180,7 @@
       // 'chapter_bar': Chapter,
       'vue-markdown': MarkDown,
     },
-    created(){
+    created() {
       this.selectedVersionUrl = this.downloadVersionList[0].url;
     },
     methods: {
@@ -173,7 +207,7 @@
     top: 100px;
     left: 20%;
     right: 5%;
-    bottom: 200px;
+    bottom: 100px;
   }
 
   .fixed-middle {
@@ -254,17 +288,17 @@
     background: #fcac45;
   }
 
-  #select-version{
+  #select-version {
     background: #fcac45;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 6px 12px;
     height: 35px;
-    width:80%;
+    width: 80%;
     text-align: center;
   }
 
-  .version-message{
+  .version-message {
     text-align: center;
   }
 
