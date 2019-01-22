@@ -1,3 +1,23 @@
+<!-- TOC -->
+
+- [6.1 Cli/shell tool](#61-clishell-tool)
+    - [6.1.1 Cli/Shell Running Mode](#611-clishell-running-mode)
+    - [6.1.2 Cli/Shell operation parameters](#612-clishell-operation-parameters)
+- [Tsfile-Spark-Connector User Guide](#tsfile-spark-connector-user-guide)
+    - [1. Dependency & Versions](#1-dependency--versions)
+    - [2. Building](#2-building)
+    - [3. TsFile Type <=> SparkSQL type](#3-tsfile-type--sparksql-type)
+    - [4. TsFile Schema <-> SparkSQL Table Structure](#4-tsfile-schema---sparksql-table-structure)
+        - [4.1. the default way](#41-the-default-way)
+        - [4.2. unfolding delta_object column](#42-unfolding-delta_object-column)
+    - [5. Examples](#5-examples)
+        - [5.1 Scala API](#51-scala-api)
+        - [5.2 spark-shell](#52-spark-shell)
+            - [5.2.1 Start Spark](#521-start-spark)
+                - [5.2.1.1 Local Mode](#5211-local-mode)
+                - [5.2.1.2 Distributed Mode](#5212-distributed-mode)
+
+<!-- /TOC -->
 # 6.1 Cli/shell tool
 IoTDB provides CLI / shell tools for users to start client and server programs. Here's how each CLI / shell tool works and its parameters,where \$IOTDB\_HOME represents the path of the IoTDB installation directory.
 

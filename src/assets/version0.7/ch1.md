@@ -1,3 +1,18 @@
+<!-- TOC -->
+
+- [Chapter 1: Overview](#chapter-1-overview)
+    - [What is IoTDB](#what-is-iotdb)
+    - [Architecture](#architecture)
+    - [Scenario](#scenario)
+    - [Scenario 1](#scenario-1)
+    - [Scenario 2](#scenario-2)
+    - [Scenario 3](#scenario-3)
+    - [Scenario 4](#scenario-4)
+    - [Features](#features)
+    - [Benefits](#benefits)
+    - [Release Notes](#release-notes)
+
+<!-- /TOC -->
 # Chapter 1: Overview
 
 ## What is IoTDB

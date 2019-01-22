@@ -1,3 +1,28 @@
+<!-- TOC -->
+
+- [Chapter 3](#chapter-3)
+    - [3.1 Key Concepts and Terminology](#31-key-concepts-and-terminology)
+        - [3.1.1 Device](#311-device)
+        - [3.1.2 Sensor](#312-sensor)
+        - [3.1.3 Storage Group](#313-storage-group)
+        - [3.1.4 Path](#314-path)
+        - [3.1.5 Timeseries Path](#315-timeseries-path)
+        - [3.1.6 Prefix Path](#316-prefix-path)
+        - [3.1.7 Path With Star](#317-path-with-star)
+        - [3.1.8 Timestamp](#318-timestamp)
+        - [3.1.9 Value](#319-value)
+        - [3.1.10 Point](#3110-point)
+        - [3.1.11 Column](#3111-column)
+    - [3.2 Data Type](#32-data-type)
+    - [3.3 Coding](#33-coding)
+        - [3.3.1 PLAIN](#331-plain)
+        - [3.3.2 TS_2DIFF](#332-ts_2diff)
+        - [3.3.3 RLE](#333-rle)
+        - [3.3.4 GORILLA](#334-gorilla)
+        - [3.3.5 Correspondence between data type and coding](#335-correspondence-between-data-type-and-coding)
+    - [3.4 Compression](#34-compression)
+
+<!-- /TOC -->
 # Chapter 3
 ## 3.1 Key Concepts and Terminology
 The following basic concepts are involved in IoTDB:

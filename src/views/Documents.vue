@@ -4,20 +4,23 @@
       <div class="row" style="margin: 0 0;height:90%">
         <div class="col-xs-2 sidebar" style="">
           <div class="version text-center">
-            <div class="dropdown center-block" style="width: 80%;">
-              <button class="btn dropdown-toggle" data-toggle="dropdown" style="width: 100%">
-                IoTDB v0.7
-                <b class="caret right-block"></b>
-              </button>
-              <ul class="dropdown-menu">
-                <li>
-                  <a id="action-1" href="#">IoTDB v0.6</a>
-                </li>
-                <li>
-                  <a href="#">IoTDB v0.5</a>
-                </li>
-              </ul>
-            </div>
+            <!--<div class="dropdown center-block" style="width: 80%;">-->
+              <!--<button class="btn dropdown-toggle" data-toggle="dropdown" style="width: 100%">-->
+                <!--IoTDB v0.7-->
+                <!--<b class="caret right-block"></b>-->
+              <!--</button>-->
+              <!--<ul class="dropdown-menu">-->
+                <!--<li>-->
+                  <!--<a id="action-1" href="#">IoTDB v0.6</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                  <!--<a href="#">IoTDB v0.5</a>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</div>-->
+          <select v-model="selectedVersionUrl" id="select-version">
+            <option class="version-message" v-for="iotdbVersion in downloadVersionList" :value="iotdbVersion.url">{{iotdbVersion.text}}</option>
+          </select>
           </div>
           <div class="content center-block" style="width: 14%;overflow: auto">
             <h4>Overview</h4>
@@ -54,10 +57,12 @@
 
         <div class="col-xs-10 fixed-middle">
           <ul class="breadcrumb direct" id="bread_chapter">
-
+            <li><a style='color:#fcac45;'>IoTDB 0.7</a></li>
+            <li><a style='color:#fcac45;'>overview</a></li>
+            <li><a style='color:#fcac45;'>What is IoTDB</a></li>
           </ul>
           <div id="text_content" class="text_field">
-            <vue-markdown id="markdown-area" :source="version7[active]"></vue-markdown>
+            <vue-markdown id="markdown-area" :source="version7[active]" :toc="true" :toc-anchor-link="true"></vue-markdown>
           </div>
           <div class="find-mistake">
             <p>This documentation is open source. Find mistakes? Want to contribute? Go for it.</p>
@@ -79,6 +84,11 @@
     name: "Documents",
     data() {
       return {
+        downloadVersionList: [
+          { text: 'iotdb-v7.0', url: 'https://github.com/apache/incubator-iotdb'},
+          { text: 'iotdb-v8.0', url: 'https://github.com/apache/incubator-iotdb' },
+          { text: 'iotdb-v9.0', url: 'https://github.com/apache/incubator-iotdb' }
+          ],
         Chapter1: [
           {section: "What is IoTDB"},
           {section: "Architecture"},
@@ -121,11 +131,11 @@
         version7: {
           overview: require("../assets/version0.7/ch1.md"),
           chapter2: require("../assets/version0.7/ch2.md"),
-          chapter3:require("../assets/version0.7/ch3.md"),
-          chapter4:require("../assets/version0.7/ch4.md"),
-          chapter5:require("../assets/version0.7/ch5.md"),
-          chapter6:require("../assets/version0.7/ch6.md"),
-          chapter7:require("../assets/version0.7/ch7.md")
+          chapter3: require("../assets/version0.7/ch3.md"),
+          chapter4: require("../assets/version0.7/ch4.md"),
+          chapter5: require("../assets/version0.7/ch5.md"),
+          chapter6: require("../assets/version0.7/ch6.md"),
+          chapter7: require("../assets/version0.7/ch7.md")
         },
         active: "overview",
 
@@ -135,6 +145,9 @@
       'footer_bar': Footer,
       // 'chapter_bar': Chapter,
       'vue-markdown': MarkDown,
+    },
+    created(){
+      this.selectedVersionUrl = this.downloadVersionList[0].url;
     },
     methods: {
       change_navi_content: function (event) {
@@ -146,7 +159,7 @@
         x.innerHTML = "<li><a style='color:#fcac45;'>IoTDB 0.7</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
           chapter + "</a></li>" + "<li><a style='color:#fcac45;'>" + section + "</a></li>";
         // y.innerText = version;
-        this.active=chapter;
+        this.active = chapter;
       }
     }
   }
@@ -158,9 +171,9 @@
     position: fixed;
     overflow: auto;
     top: 100px;
-    left:20%;
+    left: 20%;
     right: 5%;
-    bottom: 100px;
+    bottom: 200px;
   }
 
   .fixed-middle {
@@ -241,13 +254,27 @@
     background: #fcac45;
   }
 
+  #select-version{
+    background: #fcac45;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    height: 35px;
+    width:80%;
+    text-align: center;
+  }
+
+  .version-message{
+    text-align: center;
+  }
+
   .dropdown-menu {
     text-align: center;
   }
 
   .content.center-block {
     position: fixed;
-    left:2%;
+    left: 2%;
     top: 120px;
     bottom: 50px;
   }
