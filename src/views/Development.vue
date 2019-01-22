@@ -3,11 +3,9 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-8" v-if="content() === 'UsefulDeveloperTools'">
-          <!--<UsefulDeveloperTools></UsefulDeveloperTools>-->
           <vue-markdown :source="development['UsefulDeveloperTools']"></vue-markdown>
         </div>
         <div class="col-sm-8" v-else="content() === 'VersioningPolicy'">
-          <!--<VersioningPolicy></VersioningPolicy>-->
           <vue-markdown :source="development['VersioningPolicy']"></vue-markdown>
         </div>
         <my-sidebar/>
@@ -53,12 +51,6 @@
   body {
     font-family: Georgia, "Times New Roman", Times, serif;
     color: #555;
-  }
-
-  @media (min-width: 1200px) {
-    .container {
-      width: 970px;
-    }
   }
 
   .pager > li > a {

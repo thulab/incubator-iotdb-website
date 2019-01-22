@@ -36,6 +36,7 @@
   import SideBar from '../components/SideBar'
   import markdown from 'vue-markdown'
 
+
   export default {
     name: "Community",
     components: {
@@ -74,12 +75,6 @@
   body {
     font-family: Georgia, "Times New Roman", Times, serif;
     color: #555;
-  }
-
-  @media (min-width: 1200px) {
-    .container {
-      width: 970px;
-    }
   }
 
   .pager > li > a {
