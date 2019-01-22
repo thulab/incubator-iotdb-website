@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/views/HelloWorld'
 import Home from '@/views/Home'
 import Download from '@/views/Download'
 import Documents from '@/views/Documents'
-import Tools from '@/views/Tools'
 import Community from '@/views/Community'
 import Development from '@/views/Development'
+import Tools from '@/views/Tools'
 import Comming from '@/views/Comming'
+import NotFound from "../views/NotFound";
 
 
 Vue.use(Router);
@@ -35,19 +35,29 @@ export default new Router({
       component: Tools
     },
     {
-      path: '/Community',
-      name: 'Comming',
-      component: Comming
+      path: '/Community/:content',
+      name: 'Community',
+      component: Community
     },
     {
-      path: '/Development',
+      path: '/Development/:content',
       name: 'Development',
-      component: Comming
+      component: Development
+
     },
     {
       path: '/Comming',
       name: "Comming",
       component: Comming
+    },
+    {
+      path: "/404",
+      name: "NotFound",
+      component: NotFound
+    },
+    {
+      path: "*",
+      redirect: "/404"
     }
   ]
 })

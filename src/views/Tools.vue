@@ -1,44 +1,57 @@
 <template>
   <div class="background-image">
-    <div class="main container" style="width:95%">
+    <div class="container">
       <br>
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-lg-7">
           <div class="scene">
             <img src="../assets/img/tools.jpg">
           </div>
         </div>
-        <div class="col-xs-6">
+        <div class="col-lg-5">
           <div class="introduction">
-            <p>Introduction of copywriting(coming soon...)</p>
+            <p><b>IoTDB</b> is an open-source time series database developed by THULab(link) which is written in JAVA. In order
+              to enable IoTDB to more fully support the application of time series data, we have developed a few tools
+              for IoTDB expansion.
+            </p>
+            <ul>
+              <li>SQL-like client(Cli) is developed for users to interact with IoTDB engine in command line.</li>
+              <li>Grafana is developed to visualize time series data in IoTDB using Grafana.</li>
+              <li>IoTDB can be also efficiently integrated with other computing frameworks in big data ecosystems, like
+                Hadoop and Spark, for advanced data analytics. That is why we offer you hadoop and spark connector.
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <br>
-      <hr/>
-      <br>
-      <div class="row">
-        <div class="col-xs-3" v-for="tool in Tools">
-          <div class="tool sidebar thumbnail">
-            <h1>{{tool.header}}</h1>
-            <p v-html="tool.content"></p>
-            <br>
-            <hr/>
-            <div class="tool-download">
-              <button data-toggle="modal" data-target="#myModal" type="button"
-                      class="tool-download-button btn btn-default">
-                Download
-              </button>
-              <br>
-              <br>
-            </div>
-            <div class="tool-documentation">
-              <button data-toggle="modal" data-target="#myModal" type="button"
-                      class="tool-documentation-button btn btn-default">
-                <span style="color: white; ">Documentation</span>
-              </button>
-              <br>
-              <br>
+      <hr>
+      <div class="tools">
+        <div class="row">
+          <div v-for="tool in Tools">
+            <div class="col-md-6 col-lg-3">
+              <div class="tool thumbnail">-->
+                <h3>{{tool.header}}</h3>
+                <div class="content">
+                  <p v-html="tool.content"></p>
+                </div>
+                <hr/>
+                <div class="tool-download">
+                  <button data-toggle="modal" data-target="#myModal" type="button"
+                          class="tool-download-button btn btn-default">
+                    <p style="font-size: medium">Download</p>
+                  </button>
+                  <br>
+                  <br>
+                </div>
+                <div class="tool-documentation">
+                  <button data-toggle="modal" data-target="#myModal" type="button"
+                          class="tool-documentation-button btn btn-default">
+                    <p style="color: white; font-size: medium">Documentation</p>
+                  </button>
+                  <br>
+                  <br>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -56,12 +69,14 @@
         </div>
       </div>
     </div>
+    <hr>
     <footer-bar/>
   </div>
 </template>
 
 <script>
-  import Footer from "../components/Footer"
+  import Footer from "../components/FooterFixed"
+
   export default {
     name: "Tools",
     components: {
@@ -104,15 +119,15 @@
 <style scoped>
 
   .background-image {
-    background: antiquewhite no-repeat;
+    background: antiquewhite repeat;
   }
 
   .scene {
     border: 2px solid;
     border-radius: 10px;
-    margin: 10px 10px 10px 10px;
     padding: 10px;
     background: white;
+    float: left;
   }
 
   .scene > img {
@@ -122,34 +137,52 @@
   }
 
   .introduction {
-    border: 2px solid;
-    border-radius: 20px;
-    margin: 10px 10px 10px 10px;
-    padding: 10px;
-    background: black;
+    border: 0px solid;
+    border-radius: 10px;
+    margin: 2px 2px 2px 2px;
+    float: right;
+    height: 100%;
   }
 
   .introduction > p {
-    color: white;
+    color: black;
+    font-size: medium;
+  }
+
+  .introduction > ul {
+    color: black;
+    font-size: medium;
   }
 
   .tool {
-    border: 6px solid;
-    border-radius: 20px;
+    text-align: center;
+    border: 2px solid;
+    border-radius: 10px;
     background: black;
     padding: 20px 20px;
-    width: 100%;
+    width: 98%;
   }
 
-  .tool > h1 {
+  .content {
+    height: 80px;
+  }
+
+  .content > p {
     color: white;
     text-align: center;
+    font-size: x-small;
+  }
+
+  .tool > h3 {
+    color: white;
+    text-align: center;
+    height: 40px;
   }
 
   .tool > p {
     color: white;
     text-align: center;
-    font-size: large;
+    font-size: small;
   }
 
   .tool-download {
@@ -179,5 +212,24 @@
     font-weight: bold;
     border: 2px solid #fcac45;
   }
+
+  .tools .col-lg-3 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .tools .col-lg-3 p {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .tools h2 {
+    font-weight: normal;
+  }
+
+  .tools h1 {
+    font-weight: normal;
+  }
+
 
 </style>
