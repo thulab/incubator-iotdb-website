@@ -13,6 +13,7 @@ import ProjectHistory from '@/views/Community/ProjectHistory'
 import UsefulDeveloperTools from '@/views/Development/UsefulDeveloperTools'
 import VersioningPolicy from '@/views/Development/VersioningPolicy'
 import Comming from '@/views/Comming'
+import NotFound from "../views/NotFound";
 
 
 Vue.use(Router);
@@ -83,6 +84,15 @@ export default new Router({
       path: '/Comming',
       name: "Comming",
       component: Comming
+    },
+    {
+      path: "/404",
+      name: "NotFound",
+      component: NotFound
+    },
+    {
+      path: "*",
+      redirect: "/404"
     }
   ]
 })
