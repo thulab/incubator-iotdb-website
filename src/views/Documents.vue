@@ -60,7 +60,7 @@
             <vue-markdown id="markdown-area" :source="version7[active]"></vue-markdown>
           </div>
           <div class="find-mistake">
-            <p @click="test()">This documentation is open source. Find mistakes? Want to contribute? Go for it.</p>
+            <p>This documentation is open source. Find mistakes? Want to contribute? Go for it.</p>
           </div>
         </div>
       </div>
