@@ -2,11 +2,8 @@
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-sm-8" v-if="content() === 'UsefulDeveloperTools'">
-          <vue-markdown :source="development['UsefulDeveloperTools']"></vue-markdown>
-        </div>
-        <div class="col-sm-8" v-else="content() === 'VersioningPolicy'">
-          <vue-markdown :source="development['VersioningPolicy']"></vue-markdown>
+        <div class="col-sm-8">
+          <vue-markdown v-bind:source="development"></vue-markdown>
         </div>
         <my-sidebar/>
       </div>
@@ -19,6 +16,7 @@
   import Footer from "../components/FooterFixed"
   import SideBar from '../components/SideBar'
   import markdown from 'vue-markdown'
+  import axios from 'axios'
 
   export default {
     name: "Development",
@@ -30,15 +28,46 @@
     data() {
       return {
         msg: 'Welcome to Community Page',
-        development: {
-          UsefulDeveloperTools: require("../assets/markdown/Development/Useful Developer Tools.md"),
-          VersioningPolicy: require("../assets/markdown/Development/Versioning Policy.md"),
-        }
+        development: ""
       }
+    },
+    created(){
+      this.fetchData();
+    },
+    watch: {
+      // 如果路由有变化，会再次执行该方法
+      '$route': 'fetchData'
     },
     methods: {
       content: function () {
         return this.$route.params.content
+      },
+      fetchData () {
+        const dict = {
+          "Have Questions": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Development.md",
+          "How to contribute": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Development.md"
+        };
+        console.log(this.content());
+        const content = this.content();
+        let url = null;
+        if(content in dict){
+          url = dict[content];
+        } else {
+          this.$router.push('/404');
+        }
+        console.log(url);
+        const pointer = this;
+        axios.get(url)
+          .then(function (response) {
+            console.log(response.data);
+            pointer.development = response.data;
+            console.log(pointer);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .then(function () {
+          });
       }
     }
   }

@@ -89,8 +89,8 @@
           {"url": "/Comming", "content": "History & Vision"},
         ],
         "Development": [
-          {"url": "/Comming", "content": "Have Questions"},
-          {"url": "/Comming", "content": "How to contribute"}
+          {"url": "/Development/Have Questions", "content": "Have Questions"},
+          {"url": "/Development/How to contribute", "content": "How to contribute"}
         ]
 
       }
