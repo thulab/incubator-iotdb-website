@@ -92,7 +92,7 @@
         Chapter7: [
           {section: "IoTDB Query Statement"},
           {section: "Reference"},
-        ]
+        ],
       }
     },
     methods: {
@@ -101,7 +101,7 @@
         var chapter = event.currentTarget.className;
         var section = event.currentTarget.innerText;
         var x = document.getElementById("bread_chapter");
-        var y = document.getElementById("text_content");
+        var y = document.getElementById("markdown-area");
         x.innerHTML = "<li><a style='color:#fcac45;'>IoTDB 0.7</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
           chapter + "</a></li>" + "<li><a style='color:#fcac45;'>" + section + "</a></li>";
         y.innerText = version + "IoTDB" + chapter + section;
