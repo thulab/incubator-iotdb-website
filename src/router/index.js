@@ -4,8 +4,6 @@ import Home from '@/views/Home'
 import Download from '@/views/Download'
 import Documents from '@/views/Documents'
 import Tools from '@/views/Tools'
-import Community from '@/views/Community'
-import Development from '@/views/Development'
 import Comming from '@/views/Comming'
 
 
@@ -42,6 +40,7 @@ export default new Router({
       path: '/Development/:content',
       name: 'Development',
       component: Development
+
     },
     {
       path: '/Comming',
