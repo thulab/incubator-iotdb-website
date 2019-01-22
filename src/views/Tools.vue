@@ -119,7 +119,7 @@
 <style scoped>
 
   .background-image {
-    background: antiquewhite no-repeat;
+    background: antiquewhite repeat;
   }
 
   .scene {
