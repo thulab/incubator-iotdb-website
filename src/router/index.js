@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Home from '@/views/Home'
 import Download from '@/views/Download'
 import Documents from '@/views/Documents'
+import Community from '@/views/Community'
+import Development from '@/views/Development'
 import Tools from '@/views/Tools'
 import Comming from '@/views/Comming'
 

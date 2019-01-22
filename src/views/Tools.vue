@@ -182,7 +182,7 @@
   .tool > p {
     color: white;
     text-align: center;
-    font-size: x-small;
+    font-size: small;
   }
 
   .tool-download {
