@@ -19,6 +19,11 @@
   #app {
     color: #2c3e50;
   }
+
+  .background-image {
+    background: antiquewhite repeat;
+  }
+
   body{
     font-family: 'Lato', sans-serif;
   }

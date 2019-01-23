@@ -2,8 +2,8 @@
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-sm-8" v-if="locate='Have Questions'">
-          <vue-markdown v-bind:source="development" :toc="true" :toc-anchor-link-symbol="toc"></vue-markdown>
+        <div class="col-sm-8">
+          <vue-markdown v-bind:source="example" >{{returnTop}}</vue-markdown>
         </div>
         <my-sidebar/>
       </div>
@@ -13,7 +13,6 @@
     <br>
     <footer-bar/>
   </div>
-
 </template>
 
 <script>
@@ -23,7 +22,7 @@
   import axios from 'axios'
 
   export default {
-    name: "Development",
+    name: "Example",
     components: {
       'footer-bar': Footer,
       'my-sidebar': SideBar,
@@ -31,46 +30,25 @@
     },
     data() {
       return {
-        msg: 'Welcome to Community Page',
-        toc: "",
-        development: "",
-        locate: ""
+        msg: 'Welcome to Example Page',
+        example: ""
       }
     },
     created() {
       this.fetchData();
     },
-    watch: {
-      '$route': 'fetchData'
-    },
     methods: {
-      content: function () {
-        return this.$route.params.content
+      returnTop: function () {
+        document.querySelector("#pull-request").scrollIntoView(true);
       },
       fetchData() {
-        const dict = {
-          "Have Questions": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Development.md",
-          "How to contribute": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Development.md"
-        };
-        const locate ={
-          "Have Questions": "#have-questions",
-          "How to contribute": "#how-to-contribute"
-        }
-        console.log(this.content());
-        const content = this.content();
-        let url = null;
-        if (content in dict) {
-          url = dict[content];
-        } else {
-          this.$router.push('/404');
-        }
+        let url = "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/OtherMaterial-Examples.md";
         console.log(url);
-        this.locate = content;
         const pointer = this;
         axios.get(url)
           .then(function (response) {
             console.log(response.data);
-            pointer.development = response.data;
+            pointer.example = response.data;
             console.log(pointer);
           })
           .catch(function (error) {
@@ -78,11 +56,11 @@
           })
           .then(function () {
           });
-        location.href = locate[content];
       }
     }
   }
 </script>
+
 <style scoped>
   h1, h2 {
     font-weight: normal;
@@ -105,3 +83,4 @@
   }
 
 </style>
+
