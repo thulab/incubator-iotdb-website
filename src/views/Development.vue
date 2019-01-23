@@ -56,7 +56,6 @@
           "Have Questions": "#have-questions",
           "How to contribute": "#how-to-contribute"
         }
-        console.log(this.content());
         const content = this.content();
         let url = null;
         if (content in dict) {
@@ -64,20 +63,12 @@
         } else {
           this.$router.push('/404');
         }
-        console.log(url);
         this.locate = content;
         const pointer = this;
         axios.get(url)
           .then(function (response) {
-            console.log(response.data);
             pointer.development = response.data;
-            console.log(pointer);
           })
-          .catch(function (error) {
-            console.log(error);
-          })
-          .then(function () {
-          });
         location.href = locate[content];
       }
     }

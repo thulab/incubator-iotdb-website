@@ -56,7 +56,6 @@
           "Project Committers": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Community-Project%20Committers.md",
           "History & Vision": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Community-History%26Vision.md"
         };
-        console.log(this.content());
         const content = this.content();
         let url = null;
         if (content in dict) {
@@ -64,19 +63,11 @@
         } else {
           this.$router.push('/404');
         }
-        console.log(url);
         const pointer = this;
         axios.get(url)
           .then(function (response) {
-            console.log(response.data);
             pointer.community = response.data;
-            console.log(pointer);
           })
-          .catch(function (error) {
-            console.log(error);
-          })
-          .then(function () {
-          });
       }
     }
   }

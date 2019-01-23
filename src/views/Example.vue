@@ -43,19 +43,11 @@
       },
       fetchData() {
         let url = "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/OtherMaterial-Examples.md";
-        console.log(url);
         const pointer = this;
         axios.get(url)
           .then(function (response) {
-            console.log(response.data);
             pointer.example = response.data;
-            console.log(pointer);
           })
-          .catch(function (error) {
-            console.log(error);
-          })
-          .then(function () {
-          });
       }
     }
   }
