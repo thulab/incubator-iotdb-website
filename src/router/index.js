@@ -25,7 +25,7 @@ export default new Router({
       component: Download
     },
     {
-      path: '/Documents/:version',
+      path: '/Documents/:version/:section?',
       name: 'Documents',
       component: Documents
     },

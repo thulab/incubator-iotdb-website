@@ -4,25 +4,20 @@
       <div class="row" style="margin: 0 0;height:90%">
         <div class="col-xs-2 sidebar" style="">
           <div class="version text-center">
-            <!--<div class="dropdown center-block" style="width: 80%;">-->
-            <!--<button class="btn dropdown-toggle" data-toggle="dropdown" style="width: 100%">-->
-            <!--IoTDB v0.7-->
-            <!--<b class="caret right-block"></b>-->
-            <!--</button>-->
-            <!--<ul class="dropdown-menu">-->
-            <!--<li>-->
-            <!--<a id="action-1" href="#">IoTDB v0.6</a>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<a href="#">IoTDB v0.5</a>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <select v-model="selectedVersionUrl" id="select-version">
-              <option class="version-message" v-for="iotdbVersion in downloadVersionList" :value="iotdbVersion.url">
-                {{iotdbVersion.text}}
-              </option>
-            </select>
+            <div class="dropdown center-block" style="width: 80%;">
+              <button class="btn dropdown-toggle" data-toggle="dropdown" style="width: 100%">
+                IoTDB v0.7
+                <b class="caret right-block"></b>
+              </button>
+              <ul class="dropdown-menu">
+                <router-link v-for="item in versions" :to="item.url" :key="index"><li>{{item.text}}</li></router-link>
+              </ul>
+            </div>
+            <!--<select id="select-version" v-model="selectVersionObj">-->
+              <!--<option class="version-message" v-for="iotdbVersion in downloadVersionList" :value="iotdbVersion">-->
+                <!--<router-link :to="">{{iotdbVersion.text}}</router-link>-->
+              <!--</option>-->
+            <!--</select>-->
           </div>
           <div class="content center-block" style="width: 14%;overflow: auto">
             <div v-for="(chap,index) in ver7doc" :key="index">
@@ -72,7 +67,7 @@
             <li><a style='color:#fcac45;'>What is IoTDB</a></li>
           </ul>
           <div id="text_content" class="text_field">
-            <vue-markdown id="markdown-area" :source="version7[active]" :toc="true"
+            <vue-markdown id="markdown-area" :source="document_test" :toc="true"
                           :toc-anchor-link="true"></vue-markdown>
           </div>
           <div class="find-mistake">
@@ -90,15 +85,23 @@
   import Footer from "../components/FooterFixed"
   // import Chapter from "../components/Chapter"
   import MarkDown from "vue-markdown"
+  import axios from 'axios'
 
   export default {
     name: "Documents",
     data() {
       return {
+        versions:[
+          {text:'IoTDB v0.7',url:'/Documents/ver7/sec1'},
+          {text:'IoTDB v0.6',url:'/Documents/ver6/sec1'},
+          {text:'IoTDB v0.5',url:'/Documents/ver5/sec1'}
+        ],
+        selectVersionObj: {},
+
         downloadVersionList: [
           {text: 'iotdb-v7.0', url: 'https://github.com/apache/incubator-iotdb'},
-          {text: 'iotdb-v8.0', url: 'https://github.com/apache/incubator-iotdb'},
-          {text: 'iotdb-v9.0', url: 'https://github.com/apache/incubator-iotdb'}
+          {text: 'iotdb-v6.0', url: 'https://github.com/apache/incubator-iotdb'},
+          {text: 'iotdb-v5.0', url: 'https://github.com/apache/incubator-iotdb'}
         ],
         ver7doc: [
           {
@@ -172,7 +175,7 @@
           chapter7: require("../assets/version0.7/ch7.md")
         },
         active: "overview",
-
+        document_test: "",
       }
     },
     components: {
@@ -181,7 +184,14 @@
       'vue-markdown': MarkDown,
     },
     created() {
-      this.selectedVersionUrl = this.downloadVersionList[0].url;
+      // this.selectedVersionUrl=this.downloadVersionList[0].url;
+      this.changeButtonVersion();
+      this.fetchData();
+    },
+    watch: {
+      // 如果路由有变化，会再次执行该方法
+      '$route': 'fetchData',
+
     },
     methods: {
       change_navi_content: function (event) {
@@ -194,7 +204,60 @@
           chapter + "</a></li>" + "<li><a style='color:#fcac45;'>" + section + "</a></li>";
         // y.innerText = version;
         this.active = chapter;
+      },
+      changeButtonVersion() {
+        console.log(this.getVersion() == "ver7");
+        if (this.getVersion() == "ver7") {
+          this.selectVersionObj = this.downloadVersionList[0];
+          console.log("versionchangecom");
+        }
+        else if (this.getVersion() == "ver6") {
+          this.selectVersionObj = this.downloadVersionList[1];
+        }
+        else if (this.getVersion() == "ver5") {
+          this.selectVersionObj = this.downloadVersionList[2];
+        }
+      },
+      getVersion() {
+        return this.$route.params.version;
+      },
+      getSection() {
+        return this.$route.params.section;
+      },
+      fetchData() {
+        const dict = {
+          "ver7sec1": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/1-Overview.md",
+          "ver7sec2": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/2-Concept.md",
+          "ver7sec3": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/3-Operation Manual.md",
+          "ver7sec4": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/4-Deployment and Management.md",
+          "ver7sec5": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/5-SQL Documentation.md",
+          "ver7sec6": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/6-JDBC Documentation.md",
+          // "ver7sec7": "https://github.com/apache/incubator-iotdb/blob/doc/docs/Documentation/UserGuideV0.7/1-Overview.md",
+
+        };
+        console.log(this.getVersion() + this.getSection());
+        const content = this.getVersion() + this.getSection();
+        let url = null;
+        if (content in dict) {
+          url = dict[content];
+        } else {
+          this.$router.push('/404');
+        }
+        console.log(url);
+        const pointer = this;
+        axios.get(url)
+          .then(function (response) {
+            // console.log(response.data);
+            pointer.document_test = response.data;
+            // console.log(pointer);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .then(function () {
+          });
       }
+
     }
   }
 </script>

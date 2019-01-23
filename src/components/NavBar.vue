@@ -79,7 +79,7 @@
       return {
         "Documents": [
           {"url": "/Comming", "content": "Quick Start"},
-          {"url": "/Documents/latest", "content": "User Guide"},
+          {"url": "/Documents/ver7/sec1", "content": "User Guide"},
           {"url": "/Comming", "content": "Other Materials"},
           {"url": "/Comming", "content": "Frequently asked questions"}
         ],
@@ -89,8 +89,8 @@
           {"url": "/Comming", "content": "History & Vision"},
         ],
         "Development": [
-          {"url": "/Comming", "content": "Have Questions"},
-          {"url": "/Comming", "content": "How to contribute"}
+          {"url": "/Development/Have Questions", "content": "Have Questions"},
+          {"url": "/Development/How to contribute", "content": "How to contribute"}
         ]
 
       }
