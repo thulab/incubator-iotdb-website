@@ -32,12 +32,12 @@
         <div class="col-xs-10 fixed-middle">
           <ul class="breadcrumb direct" id="bread_chapter">
             <li><a style='color:#fcac45;'>IoTDB 0.7</a></li>
-            <li><a style='color:#fcac45;'>overview</a></li>
+            <li><a style='color:#fcac45;'>Chapter 1: Overview</a></li>
             <li><a style='color:#fcac45;'>What is IoTDB</a></li>
           </ul>
           <div id="text_content" class="text_field">
             <vue-markdown class="markdown-area" :source="document_test" :toc="true"
-                          :toc-anchor-link="true"></vue-markdown>
+                          :toc-anchor-link="true" toc-anchor-link-symbol=""></vue-markdown>
           </div>
           <div class="find-mistake">
             <p>This documentation is open source. Find mistakes? Want to contribute? Go for it.</p>
@@ -101,7 +101,8 @@
         let ver = this.getVersionString();
         let chapter = event.currentTarget.innerText;
         var x = document.getElementById("bread_chapter");
-        x.innerHTML = "<li><a style='color:#fcac45;'>" + ver + "</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
+        x.innerHTML = "<li><a style='color:#fcac45;'>" + ver + "</a></li>" + "<li><a style='color:#fcac45;' href='#" +
+          chapter.trim().toLocaleLowerCase().replace(/ /g,'-').replace(/:/g,'')+"'>" +
           chapter + "</a></li>";
         let sect = event.currentTarget.className;
         this.$route.params.section = "sec" + sect.replace(/[^0-9]/ig, "");
@@ -113,10 +114,14 @@
         var section = event.currentTarget.innerText;
         var x = document.getElementById("bread_chapter");
         // var y = document.getElementById("markdown-area");
-        x.innerHTML = "<li><a style='color:#fcac45;'>" + version + "</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
-          chapter + "</a></li>" + "<li><a style='color:#fcac45;'>" + section + "</a></li>";
-        this.$route.params.section="sec"+chapter.replace(/[^0-9]/ig, "");
+        x.innerHTML = "<li><a style='color:#fcac45;'>" + version + "</a></li>" + "<li><a style='color:#fcac45;' href='#"+
+          chapter.trim().toLocaleLowerCase().replace(/ /g,'-').replace(/:/g,'')+"'>" +
+          chapter + "</a></li>" + "<li><a style='color:#fcac45;' href='#" +
+          section.toLocaleLowerCase().replace(/ /g, '-') + "'>" + section + "</a></li>";
+        this.$route.params.section = "sec" + chapter.replace(/[^0-9]/ig, "");
         this.fetchData();
+
+        location.href="#architecture";
       },
       // get the version
       getVersion() {
