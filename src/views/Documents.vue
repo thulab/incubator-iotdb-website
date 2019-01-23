@@ -2,10 +2,11 @@
   <div>
     <div class="main container" style="width: 100%;height: 100%">
       <div class="row" style="margin: 0 0;height:90%">
+        <!--sidebar part-->
         <div class="col-xs-2 sidebar" style="">
           <div class="version text-center">
             <div class="dropdown center-block" style="width: 80%;">
-              <button class="btn dropdown-toggle" data-toggle="dropdown" style="width: 100%">
+              <button id="version-current" class="btn dropdown-toggle" data-toggle="dropdown" style="width: 100%">
                 IoTDB v0.7
                 <b class="caret right-block"></b>
               </button>
@@ -19,14 +20,15 @@
           <div id="text-catalogue" class="content center-block" style="width: 14%;overflow: auto">
             <ul class="list-group" v-for="item in result">
               <h4 v-for="chapter in item" v-if="chapter.startsWith('#')&&!chapter.startsWith('##')"
-                  @click="change_navi_content($event)" :class="chapter.slice(1)">{{chapter.slice(1)}}</h4>
-              <li v-for="chapter in item" v-if="chapter.startsWith('##')" @click="change_navi_content($event)">
+                  @click="change_chap_navi_content($event)" :class="chapter.slice(1)">{{chapter.slice(1)}}</h4>
+              <li v-for="chapter in item" :class="item[0].slice(1)" v-if="chapter.startsWith('##')"
+                  @click="change_navi_content($event)">
                 {{chapter.slice(2)}}
               </li>
             </ul>
           </div>
         </div>
-
+        <!--content part-->
         <div class="col-xs-10 fixed-middle">
           <ul class="breadcrumb direct" id="bread_chapter">
             <li><a style='color:#fcac45;'>IoTDB 0.7</a></li>
@@ -62,86 +64,12 @@
           {text: 'IoTDB v0.7', url: '/Documents/ver7/sec1'},
           {text: 'IoTDB v0.6', url: '/Documents/ver6/sec1'},
         ],
-        ver7doc: [
-          {
-            Chapter: [
-              {section: "What is IoTDB"},
-              {section: "Architecture"},
-              {section: "Scenario"},
-              {section: "Features"}
-            ],
-            name: "overview"
-          },
-          {
-            Chapter: [
-              {section: "Build"},
-              {section: "Configure"},
-              {section: "Start"},
-            ],
-            name: "chapter2"
-          },
-          {
-            Chapter: [
-              {section: "Key Concepts and Terminology"},
-              {section: "Data Type"},
-              {section: "Coding"},
-              {section: "Compression"},
-            ],
-            name: "chapter3"
-          },
-          {
-            Chapter: [
-              {section: "Scenario Description and Sample Data"},
-              {section: "Data Model Selection and Creation"},
-              {section: "Data Access"},
-              {section: "Data Query"},
-            ],
-            name: "chapter4"
-          },
-          {
-            Chapter: [
-              {section: "Deployment"},
-              {section: "Configuration"},
-              {section: "System log"},
-              {section: "Data Management"},
-              {section: ""}
-            ],
-            name: "chapter5"
-          },
-          {
-            Chapter: [
-              {section: "Cli/shell tool"},
-              {section: "Spark"},
-            ],
-            name: "chapter6"
-          },
-          {
-            Chapter: [
-              {section: "IoTDB Query Statement"},
-              {section: "Reference"},
-            ],
-            name: "chapter7"
-          }
-        ],
-
-        version7: {
-          overview: require("../assets/version0.7/ch1.md"),
-          chapter2: require("../assets/version0.7/ch2.md"),
-          chapter3: require("../assets/version0.7/ch3.md"),
-          chapter4: require("../assets/version0.7/ch4.md"),
-          chapter5: require("../assets/version0.7/ch5.md"),
-          chapter6: require("../assets/version0.7/ch6.md"),
-          chapter7: require("../assets/version0.7/ch7.md")
-        },
-        active: "overview",
         document_test: "",
-        result: [[], [], [], [], [], []],
-
+        result: [],
       }
     },
     components: {
       'footer_bar': Footer,
-      // 'chapter_bar': Chapter,
       'vue-markdown': MarkDown,
     },
     created() {
@@ -151,58 +79,54 @@
     watch: {
       // 如果路由有变化，会再次执行该方法
       '$route': 'fetchData',
-
+      '$route.params.version': 'getButtonVersion',
     },
     methods: {
-      getVersionString(){
-        let version=this.$route.params.version;
-        let versionString="";
-        if (version=="ver7"){
-          versionString="IoTDB v0.7";
-        }
-        else if(version=="ver6"){
-          versionString="IoTDB v0.6"
-        }
-        return versionString
+      getButtonVersion() {
+        document.getElementById("version-current").innerHTML = this.getVersionString() + "<b class=\"caret right-block\"></b>";
+        this.generateCatalogue();
       },
-      change_chap_navi_content() {
-        let ver=this.getVersionString();
-        let chapter;
-        var x=document.getElementById("bread_chapter");
-        x.innerHTML= "<li><a style='color:#fcac45;'>" + ver + "</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
-          chapter + "</a></li>" + "<li><a style='color:#fcac45;'>" + section + "</a></li>";
-
+      getVersionString() {
+        let version = this.$route.params.version;
+        let versionString = "";
+        if (version == "ver7") {
+          versionString = "IoTDB v0.7";
+        }
+        else if (version == "ver6") {
+          versionString = "IoTDB v0.6"
+        }
+        return versionString;
+      },
+      change_chap_navi_content: function (event) {
+        let ver = this.getVersionString();
+        let chapter = event.currentTarget.innerText;
+        var x = document.getElementById("bread_chapter");
+        x.innerHTML = "<li><a style='color:#fcac45;'>" + ver + "</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
+          chapter + "</a></li>";
+        let sect = event.currentTarget.className;
+        this.$route.params.section = "sec" + sect.replace(/[^0-9]/ig, "");
+        this.fetchData();
       },
       change_navi_content: function (event) {
-        let version = this.$route.params.version;
+        let version = this.getVersionString();
         var chapter = event.currentTarget.className;
         var section = event.currentTarget.innerText;
         var x = document.getElementById("bread_chapter");
         // var y = document.getElementById("markdown-area");
         x.innerHTML = "<li><a style='color:#fcac45;'>" + version + "</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
           chapter + "</a></li>" + "<li><a style='color:#fcac45;'>" + section + "</a></li>";
-        // y.innerText = version;
-        this.active = chapter;
+        this.$route.params.section="sec"+chapter.replace(/[^0-9]/ig, "");
+        this.fetchData();
       },
-      // changeButtonVersion() {
-      //   console.log(this.getVersion() == "ver7");
-      //   if (this.getVersion() == "ver7") {
-      //     this.selectVersionObj = this.downloadVersionList[0];
-      //     console.log("versionchangecom");
-      //   }
-      //   else if (this.getVersion() == "ver6") {
-      //     this.selectVersionObj = this.downloadVersionList[1];
-      //   }
-      //   else if (this.getVersion() == "ver5") {
-      //     this.selectVersionObj = this.downloadVersionList[2];
-      //   }
-      // },
+      // get the version
       getVersion() {
         return this.$route.params.version;
       },
+      // get the section
       getSection() {
         return this.$route.params.section;
       },
+      // use version and section to render markdown
       fetchData() {
         const dict = {
           "ver7sec1": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/1-Overview.md",
@@ -212,9 +136,8 @@
           "ver7sec5": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/5-SQL Documentation.md",
           "ver7sec6": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/6-JDBC Documentation.md",
           // "ver7sec7": "https://github.com/apache/incubator-iotdb/blob/doc/docs/Documentation/UserGuideV0.7/1-Overview.md",
-
+          "ver6sec1": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/7-Tools-Cli.md",
         };
-        // console.log(this.getVersion() + this.getSection());
         const content = this.getVersion() + this.getSection();
         let url = null;
         if (content in dict) {
@@ -222,11 +145,11 @@
         } else {
           this.$router.push('/404');
         }
-        console.log(url);
+        // console.log(url);
         const pointer = this;
         axios.get(url)
           .then(function (response) {
-            console.log(response.data);
+            // console.log(response.data);
             pointer.document_test = response.data;
             // console.log(pointer);
           })
@@ -236,8 +159,10 @@
           .then(function () {
           });
       },
+      //generate the sidebar information when version changes
       generateCatalogue() {
-        const dict = {
+        this.result = [];
+        const dict7 = {
           "ver7sec1": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/1-Overview.md",
           "ver7sec2": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/2-Concept.md",
           "ver7sec3": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/3-Operation Manual.md",
@@ -246,27 +171,56 @@
           "ver7sec6": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/6-JDBC Documentation.md",
           // "ver7sec7": "https://github.com/apache/incubator-iotdb/blob/doc/docs/Documentation/UserGuideV0.7/1-Overview.md",
         };
-        for (let section in dict) {
-          let url = dict[section];
-          let tmp = null;
-          const pointer = this;
-          axios.get(url)
-            .then(function (response) {
-              console.log(section.substr(section.length - 1, 1));
-              tmp = response.data;
-              // console.log(tmp);
-              var rows = new Array();
-              rows = tmp.split("\n");
-              // console.log(typeof(rows[0]));
-              for (let item of rows) {
-                // console.log(typeof item);
-                if (item.startsWith("#") && !item.startsWith("###")) {
-                  // console.log(item);
-                  pointer.result[section.substr(section.length - 1, 1) - 1].push(item);
+        const dict6 = {
+          "ver6sec1": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/7-Tools-Cli.md"
+        };
+        if (this.getVersion() == "ver7") {
+          for (let section in dict7) {
+            this.result.push([]);
+            let url = dict7[section];
+            let tmp = null;
+            const pointer = this;
+            axios.get(url)
+              .then(function (response) {
+                console.log(section.substr(section.length - 1, 1));
+                tmp = response.data;
+                // console.log(tmp);
+                var rows = new Array();
+                rows = tmp.split("\n");
+                // console.log(typeof(rows[0]));
+                for (let item of rows) {
+                  // console.log(typeof item);
+                  if (item.startsWith("#") && !item.startsWith("###")) {
+                    // console.log(item);
+                    pointer.result[section.substr(section.length - 1, 1) - 1].push(item);
+                  }
                 }
-              }
-
-            })
+              })
+          }
+        }
+        else if (this.getVersion() == "ver6") {
+          for (let section in dict6) {
+            this.result.push([]);
+            let url = dict6[section];
+            let tmp = null;
+            const pointer = this;
+            axios.get(url)
+              .then(function (response) {
+                console.log(section.substr(section.length - 1, 1));
+                tmp = response.data;
+                // console.log(tmp);
+                var rows = new Array();
+                rows = tmp.split("\n");
+                // console.log(typeof(rows[0]));
+                for (let item of rows) {
+                  // console.log(typeof item);
+                  if (item.startsWith("#") && !item.startsWith("###")) {
+                    // console.log(item);
+                    pointer.result[section.substr(section.length - 1, 1) - 1].push(item);
+                  }
+                }
+              })
+          }
         }
       }
     }
