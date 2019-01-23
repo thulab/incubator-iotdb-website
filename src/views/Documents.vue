@@ -10,24 +10,21 @@
                 <b class="caret right-block"></b>
               </button>
               <ul class="dropdown-menu">
-                <router-link v-for="item in versions" :to="item.url" :key="index"><li>{{item.text}}</li></router-link>
-              </ul>
-            </div>
-            <!--<select id="select-version" v-model="selectVersionObj">-->
-              <!--<option class="version-message" v-for="iotdbVersion in downloadVersionList" :value="iotdbVersion">-->
-                <!--<router-link :to="">{{iotdbVersion.text}}</router-link>-->
-              <!--</option>-->
-            <!--</select>-->
-          </div>
-          <div class="content center-block" style="width: 14%;overflow: auto">
-            <div v-for="(chap,index) in ver7doc" :key="index">
-              <h4>{{chap.name}}</h4>
-              <ul class="list-group">
-                <li :class="chap.name" v-for="(item,index) in chap.Chapter" :key="index"
-                    @click="change_navi_content($event)">{{item.section}}
+                <li v-for="entry in versions">
+                  <router-link :to="entry.url">{{entry.text}}</router-link>
                 </li>
               </ul>
             </div>
+          </div>
+          <div class="content center-block" style="width: 14%;overflow: auto">
+            <!--<div v-for="(chap,index) in ver7doc" :key="index">-->
+            <!--<h4>{{chap.name}}</h4>-->
+            <!--<ul class="list-group">-->
+            <!--<li :class="chap.name" v-for="item in chap.Chapter"-->
+            <!--@click="change_navi_content($event)">{{item.section}}-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--</div>-->
             <!--<h4>Overview</h4>-->
             <!--<ul class="list-group">-->
             <!--<li class="overview" v-for="item in Chapter1" @click="change_navi_content($event)">{{item.section}}</li>-->
@@ -67,7 +64,7 @@
             <li><a style='color:#fcac45;'>What is IoTDB</a></li>
           </ul>
           <div id="text_content" class="text_field">
-            <vue-markdown id="markdown-area" :source="document_test" :toc="true"
+            <vue-markdown class="markdown-area" :source="document_test" :toc="true"
                           :toc-anchor-link="true"></vue-markdown>
           </div>
           <div class="find-mistake">
@@ -91,17 +88,10 @@
     name: "Documents",
     data() {
       return {
-        versions:[
-          {text:'IoTDB v0.7',url:'/Documents/ver7/sec1'},
-          {text:'IoTDB v0.6',url:'/Documents/ver6/sec1'},
-          {text:'IoTDB v0.5',url:'/Documents/ver5/sec1'}
-        ],
-        selectVersionObj: {},
-
-        downloadVersionList: [
-          {text: 'iotdb-v7.0', url: 'https://github.com/apache/incubator-iotdb'},
-          {text: 'iotdb-v6.0', url: 'https://github.com/apache/incubator-iotdb'},
-          {text: 'iotdb-v5.0', url: 'https://github.com/apache/incubator-iotdb'}
+        versions: [
+          {text: 'IoTDB v0.7', url: '/Documents/ver7/sec1'},
+          {text: 'IoTDB v0.6', url: '/Documents/ver6/sec1'},
+          {text: 'IoTDB v0.5', url: '/Documents/ver5/sec1'}
         ],
         ver7doc: [
           {
@@ -185,7 +175,7 @@
     },
     created() {
       // this.selectedVersionUrl=this.downloadVersionList[0].url;
-      this.changeButtonVersion();
+      this.generateCatalogue();
       this.fetchData();
     },
     watch: {
@@ -205,19 +195,19 @@
         // y.innerText = version;
         this.active = chapter;
       },
-      changeButtonVersion() {
-        console.log(this.getVersion() == "ver7");
-        if (this.getVersion() == "ver7") {
-          this.selectVersionObj = this.downloadVersionList[0];
-          console.log("versionchangecom");
-        }
-        else if (this.getVersion() == "ver6") {
-          this.selectVersionObj = this.downloadVersionList[1];
-        }
-        else if (this.getVersion() == "ver5") {
-          this.selectVersionObj = this.downloadVersionList[2];
-        }
-      },
+      // changeButtonVersion() {
+      //   console.log(this.getVersion() == "ver7");
+      //   if (this.getVersion() == "ver7") {
+      //     this.selectVersionObj = this.downloadVersionList[0];
+      //     console.log("versionchangecom");
+      //   }
+      //   else if (this.getVersion() == "ver6") {
+      //     this.selectVersionObj = this.downloadVersionList[1];
+      //   }
+      //   else if (this.getVersion() == "ver5") {
+      //     this.selectVersionObj = this.downloadVersionList[2];
+      //   }
+      // },
       getVersion() {
         return this.$route.params.version;
       },
@@ -235,7 +225,7 @@
           // "ver7sec7": "https://github.com/apache/incubator-iotdb/blob/doc/docs/Documentation/UserGuideV0.7/1-Overview.md",
 
         };
-        console.log(this.getVersion() + this.getSection());
+        // console.log(this.getVersion() + this.getSection());
         const content = this.getVersion() + this.getSection();
         let url = null;
         if (content in dict) {
@@ -247,7 +237,7 @@
         const pointer = this;
         axios.get(url)
           .then(function (response) {
-            // console.log(response.data);
+            console.log(response.data);
             pointer.document_test = response.data;
             // console.log(pointer);
           })
@@ -256,8 +246,29 @@
           })
           .then(function () {
           });
-      }
+      },
+      generateCatalogue() {
+        const dict = {
+          "ver7sec1": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/1-Overview.md",
+          "ver7sec2": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/2-Concept.md",
+          "ver7sec3": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/3-Operation Manual.md",
+          "ver7sec4": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/4-Deployment and Management.md",
+          "ver7sec5": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/5-SQL Documentation.md",
+          "ver7sec6": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/6-JDBC Documentation.md",
+          // "ver7sec7": "https://github.com/apache/incubator-iotdb/blob/doc/docs/Documentation/UserGuideV0.7/1-Overview.md",
 
+        };
+        for (let section in dict) {
+          let url = dict[section];
+          axios.get(url)
+            .then(function (response) {
+              console.log(response.data);
+
+            })
+        }
+
+
+      }
     }
   }
 </script>
@@ -266,10 +277,11 @@
 
   .text_field {
     position: fixed;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     top: 100px;
     left: 20%;
-    right: 5%;
+    right: 2%;
     bottom: 100px;
   }
 
@@ -374,6 +386,14 @@
     left: 2%;
     top: 120px;
     bottom: 50px;
+  }
+
+  .text_field>.markdown-area>p{
+    width:50px;
+  }
+
+  div.mark-down>p>img{
+    width:50px;
   }
 
 
