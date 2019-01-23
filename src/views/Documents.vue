@@ -16,44 +16,14 @@
               </ul>
             </div>
           </div>
-          <div class="content center-block" style="width: 14%;overflow: auto">
-            <!--<div v-for="(chap,index) in ver7doc" :key="index">-->
-            <!--<h4>{{chap.name}}</h4>-->
-            <!--<ul class="list-group">-->
-            <!--<li :class="chap.name" v-for="item in chap.Chapter"-->
-            <!--@click="change_navi_content($event)">{{item.section}}-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--<h4>Overview</h4>-->
-            <!--<ul class="list-group">-->
-            <!--<li class="overview" v-for="item in Chapter1" @click="change_navi_content($event)">{{item.section}}</li>-->
-            <!--</ul>-->
-            <!--<h4>Chapter2</h4>-->
-            <!--<ul class="list-group">-->
-            <!--<li class="chapter2" v-for="item in Chapter2" @click="change_navi_content($event)">{{item.section}}</li>-->
-            <!--</ul>-->
-            <!--<h4>Chapter3</h4>-->
-            <!--<ul class="list-group">-->
-            <!--<li class="chapter3" v-for="item in Chapter3" @click="change_navi_content($event)">{{item.section}}</li>-->
-            <!--</ul>-->
-            <!--<h4>Chapter4</h4>-->
-            <!--<ul class="list-group">-->
-            <!--<li class="chapter4" v-for="item in Chapter4" @click="change_navi_content($event)">{{item.section}}</li>-->
-            <!--</ul>-->
-            <!--<h4>Chapter5</h4>-->
-            <!--<ul class="list-group">-->
-            <!--<li class="chapter5" v-for="item in Chapter5" @click="change_navi_content($event)">{{item.section}}</li>-->
-            <!--</ul>-->
-            <!--<h4>Chapter6</h4>-->
-            <!--<ul class="list-group">-->
-            <!--<li class="chapter6" v-for="item in Chapter6" @click="change_navi_content($event)">{{item.section}}</li>-->
-            <!--</ul>-->
-            <!--<h4>Chapter7</h4>-->
-            <!--<ul class="list-group">-->
-            <!--<li class="chapter7" v-for="item in Chapter7" @click="change_navi_content($event)">{{item.section}}</li>-->
-            <!--</ul>-->
-
+          <div id="text-catalogue" class="content center-block" style="width: 14%;overflow: auto">
+            <ul class="list-group" v-for="item in result">
+              <h4 v-for="chapter in item" v-if="chapter.startsWith('#')&&!chapter.startsWith('##')"
+                  @click="change_navi_content($event)" :class="chapter.slice(1)">{{chapter.slice(1)}}</h4>
+              <li v-for="chapter in item" v-if="chapter.startsWith('##')" @click="change_navi_content($event)">
+                {{chapter.slice(2)}}
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -91,7 +61,6 @@
         versions: [
           {text: 'IoTDB v0.7', url: '/Documents/ver7/sec1'},
           {text: 'IoTDB v0.6', url: '/Documents/ver6/sec1'},
-          {text: 'IoTDB v0.5', url: '/Documents/ver5/sec1'}
         ],
         ver7doc: [
           {
@@ -166,6 +135,8 @@
         },
         active: "overview",
         document_test: "",
+        result: [[], [], [], [], [], []],
+
       }
     },
     components: {
@@ -174,7 +145,6 @@
       'vue-markdown': MarkDown,
     },
     created() {
-      // this.selectedVersionUrl=this.downloadVersionList[0].url;
       this.generateCatalogue();
       this.fetchData();
     },
@@ -184,13 +154,32 @@
 
     },
     methods: {
+      getVersionString(){
+        let version=this.$route.params.version;
+        let versionString="";
+        if (version=="ver7"){
+          versionString="IoTDB v0.7";
+        }
+        else if(version=="ver6"){
+          versionString="IoTDB v0.6"
+        }
+        return versionString
+      },
+      change_chap_navi_content() {
+        let ver=this.getVersionString();
+        let chapter;
+        var x=document.getElementById("bread_chapter");
+        x.innerHTML= "<li><a style='color:#fcac45;'>" + ver + "</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
+          chapter + "</a></li>" + "<li><a style='color:#fcac45;'>" + section + "</a></li>";
+
+      },
       change_navi_content: function (event) {
         let version = this.$route.params.version;
         var chapter = event.currentTarget.className;
         var section = event.currentTarget.innerText;
         var x = document.getElementById("bread_chapter");
         // var y = document.getElementById("markdown-area");
-        x.innerHTML = "<li><a style='color:#fcac45;'>IoTDB 0.7</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
+        x.innerHTML = "<li><a style='color:#fcac45;'>" + version + "</a></li>" + "<li><a href='#' style='color:#fcac45;'>" +
           chapter + "</a></li>" + "<li><a style='color:#fcac45;'>" + section + "</a></li>";
         // y.innerText = version;
         this.active = chapter;
@@ -256,18 +245,29 @@
           "ver7sec5": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/5-SQL Documentation.md",
           "ver7sec6": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Documentation/UserGuideV0.7/6-JDBC Documentation.md",
           // "ver7sec7": "https://github.com/apache/incubator-iotdb/blob/doc/docs/Documentation/UserGuideV0.7/1-Overview.md",
-
         };
         for (let section in dict) {
           let url = dict[section];
+          let tmp = null;
+          const pointer = this;
           axios.get(url)
             .then(function (response) {
-              console.log(response.data);
+              console.log(section.substr(section.length - 1, 1));
+              tmp = response.data;
+              // console.log(tmp);
+              var rows = new Array();
+              rows = tmp.split("\n");
+              // console.log(typeof(rows[0]));
+              for (let item of rows) {
+                // console.log(typeof item);
+                if (item.startsWith("#") && !item.startsWith("###")) {
+                  // console.log(item);
+                  pointer.result[section.substr(section.length - 1, 1) - 1].push(item);
+                }
+              }
 
             })
         }
-
-
       }
     }
   }
@@ -388,12 +388,12 @@
     bottom: 50px;
   }
 
-  .text_field>.markdown-area>p{
-    width:50px;
+  .text_field > .markdown-area > p {
+    width: 50px;
   }
 
-  div.mark-down>p>img{
-    width:50px;
+  div.mark-down > p > img {
+    width: 50px;
   }
 
 
