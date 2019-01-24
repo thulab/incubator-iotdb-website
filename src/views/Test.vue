@@ -230,8 +230,6 @@ After build, the IoTDB project will be at the subfolder named iotdb. The folder 
   </div>
 </template>
 
-  </div>
-</template>
 
 <script>
   import VueMarkdown from 'vue-markdown' // production
