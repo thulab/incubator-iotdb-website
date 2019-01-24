@@ -34,8 +34,8 @@
         <div class="col-xs-10 fixed-middle">
           <ul class="breadcrumb direct" id="bread-chapter">
             <li><a style='color:#fcac45;'>{{version}}</a></li>
-            <li><a style='color:#fcac45;' href="#chapter-1-overview">{{chapter}}</a></li>
-            <li><a style='color:#fcac45;' href="#what-is-iotdb"></a></li>
+            <li><a style='color:#fcac45;'>{{chapter}}</a></li>
+            <li><a style='color:#fcac45;'></a></li>
           </ul>
           <div id="text-content" class="text-field">
             <vue-markdown class="markdown-area" :source="document" :toc="true" :toc-anchor-link="true" toc-anchor-link-symbol=""></vue-markdown>
