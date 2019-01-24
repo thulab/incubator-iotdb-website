@@ -259,10 +259,6 @@ After build, the IoTDB project will be at the subfolder named iotdb. The folder 
 
         return $('body').html();
       },
-      createId(name){
-        return name.toLowerCase().replace(" ", "-")
-      }
-
     }
 
 
