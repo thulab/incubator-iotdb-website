@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="main container-fluid" style="height: 100%">
+    <div class="main container-fluid" >
       <div class="row" style="margin: 0 0;height:90%">
         <!--sidebar part-->
         <div class="col-xs-2 sidebar" style="">
@@ -202,15 +202,7 @@
       }
     }
   }
-
-  // $(document).ready(function () {
-  //   let barHeight = document.getElementsByClassName("navbar")[0].clientHeight;
-  //   if (barHeight > 100){
-  //     let delta = barHeight - 50;
-  //     document.getElementsByClassName('fixed-middle')[0].style['top'] = (50 + delta) + "px";
-  //     document.getElementById('text-content').style['top'] = (50 + barHeight) + "px";
-  //   }
-  // })
+  
 </script>
 
 <style scoped>
