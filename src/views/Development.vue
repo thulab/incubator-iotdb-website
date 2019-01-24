@@ -2,20 +2,18 @@
   <div>
     <div class="container">
       <div class="row">
-        <!--<div class="col-sm-8" v-if="content() === 'UsefulDeveloperTools'">-->
-          <!--<vue-markdown :source="development['UsefulDeveloperTools']"></vue-markdown>-->
-        <!--</div>-->
-        <!--<div class="col-sm-8" v-else="content() === 'VersioningPolicy'">-->
-          <!--<vue-markdown :source="development['VersioningPolicy']"></vue-markdown>-->
-        <!--</div>-->
-        <div class="col-sm-8">
-          <vue-markdown v-bind:source="development"></vue-markdown>
+        <div class="col-sm-8" v-if="locate='Have Questions'">
+          <vue-markdown v-bind:source="development" :toc="true" :toc-anchor-link-symbol="toc"></vue-markdown>
         </div>
         <my-sidebar/>
       </div>
     </div>
+    <br>
+    <br>
+    <br>
     <footer-bar/>
   </div>
+
 </template>
 
 <script>
@@ -29,34 +27,35 @@
     components: {
       'footer-bar': Footer,
       'my-sidebar': SideBar,
-      'vue-markdown':markdown,
+      'vue-markdown': markdown,
     },
     data() {
       return {
         msg: 'Welcome to Community Page',
-        development: {
-          // UsefulDeveloperTools: require("../assets/markdown/Development/Useful Developer Tools.md"),
-          // VersioningPolicy: require("../assets/markdown/Development/Versioning Policy.md"),
-        }
+        toc: "",
+        development: "",
+        locate: ""
       }
     },
-    created(){
+    created() {
       this.fetchData();
     },
     watch: {
-      // 如果路由有变化，会再次执行该方法
       '$route': 'fetchData'
     },
     methods: {
       content: function () {
         return this.$route.params.content
       },
-      fetchData () {
+      fetchData() {
         const dict = {
           "Have Questions": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Development.md",
           "How to contribute": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Development.md"
         };
-        //console.log(this.content());
+        const locate ={
+          "Have Questions": "#have-questions",
+          "How to contribute": "#how-to-contribute"
+        }
         const content = this.content();
         let url = null;
         if (content in dict) {
@@ -64,19 +63,13 @@
         } else {
           this.$router.push('/404');
         }
-        console.log(url);
+        this.locate = content;
         const pointer = this;
         axios.get(url)
           .then(function (response) {
-            //console.log(response.data);
             pointer.development = response.data;
-            console.log(pointer);
           })
-          .catch(function (error) {
-            console.log(error);
-          })
-          .then(function () {
-          });
+        location.href = locate[content];
       }
     }
   }

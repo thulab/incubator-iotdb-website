@@ -84,9 +84,9 @@
           {"url": "/Comming", "content": "Frequently asked questions"}
         ],
         "Community": [
-          {"url": "/Comming", "content": "Powered By"},
-          {"url": "/Comming", "content": "Project Committers"},
-          {"url": "/Comming", "content": "History & Vision"},
+          {"url": "/Community/Powered By", "content": "Powered By"},
+          {"url": "/Community/Project Committers", "content": "Project Committers"},
+          {"url": "/Community/History & Vision", "content": "History & Vision"}
         ],
         "Development": [
           {"url": "/Development/Have Questions", "content": "Have Questions"},
