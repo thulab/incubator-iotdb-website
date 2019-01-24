@@ -170,13 +170,12 @@
   .carousel-indicators{
     bottom: 0px;
   }
-  /*.Scenarios{*/
-    /*min-height: 450px;*/
-  /*}*/
+
   @media (min-width: 200px) {
     .carousel-inner{
       min-height: 780px;
     }
+
   }
 
   @media (min-width: 768px) {
