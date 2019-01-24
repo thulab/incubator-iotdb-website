@@ -107,6 +107,8 @@
         let sect = event.currentTarget.className;
         this.$route.params.section = "sec" + sect.replace(/[^0-9]/ig, "");
         this.fetchData();
+
+        location.href='#'+chapter.trim().toLocaleLowerCase().replace(/ /g,'-').replace(/:/g,'');
       },
       change_navi_content: function (event) {
         let version = this.getVersionString();
@@ -121,7 +123,7 @@
         this.$route.params.section = "sec" + chapter.replace(/[^0-9]/ig, "");
         this.fetchData();
 
-        location.href="#architecture";
+        location.href="#"+section.toLocaleLowerCase().replace(/ /g, '-');
       },
       // get the version
       getVersion() {
