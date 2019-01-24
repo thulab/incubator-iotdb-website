@@ -8,8 +8,11 @@ import Community from '@/views/Community'
 import Development from '@/views/Development'
 import Example from '@/views/Example'
 import Comming from '@/views/Comming'
-import NotFound from "../views/NotFound";
-
+import NotFound from "../views/NotFound"
+import SingleTool from "../views/SingleTool"
+import LatestDoc from "../views/LatestDoc"
+import Materials from "../views/Materials"
+import SingleMaterials from "../views/SingleMaterial"
 
 Vue.use(Router);
 
@@ -26,14 +29,34 @@ export default new Router({
       component: Download
     },
     {
+      path: '/Documents/:doc',
+      name: 'Documents',
+      component: LatestDoc
+    },
+    {
       path: '/Documents/:version/:section?',
       name: 'Documents',
       component: Documents
     },
     {
+      path: '/Materials',
+      name: 'Materials',
+      component: Materials
+    },
+    {
+      path: '/Materials/:doc',
+      name: 'Materials',
+      component: SingleMaterials
+    },
+    {
       path: '/Tools',
       name: 'Tools',
       component: Tools
+    },
+    {
+      path: '/Tools/:content',
+      name: 'SingleTool',
+      component: SingleTool
     },
     {
       path: '/Community/:content',
@@ -44,7 +67,6 @@ export default new Router({
       path: '/Development',
       name: 'Development',
       component: Development
-
     },
     {
       path: '/Example',
@@ -57,18 +79,21 @@ export default new Router({
       component: NotFound
     },
     {
-      path: '/Comming',
-      name: "Comming",
-      component: Comming
-    },
-    {
-      path: "/404",
-      name: "NotFound",
-      component: NotFound
-    },
-    {
       path: "*",
       redirect: "/404"
     }
-  ]
+  ],
+  scrollBehavior: function(to, from, savedPosition) {
+    if (to.hash) {
+      // get Nav bar height
+      let yOffset = document.getElementById("bs-example-navbar-collapse-1").clientHeight;
+      console.log(yOffset);
+      return {
+        selector: to.hash,
+        offset: {x: 0, y: yOffset}
+      }
+    } else {
+      return { x: 0, y: 0 }
+    }
+  },
 })
