@@ -8,7 +8,7 @@ import Development from '@/views/Development'
 import Tools from '@/views/Tools'
 import Comming from '@/views/Comming'
 import NotFound from "../views/NotFound";
-
+import Test from "@/views/Test";
 
 Vue.use(Router);
 
@@ -51,6 +51,11 @@ export default new Router({
       component: Comming
     },
     {
+      path: '/Test',
+      name: "Test",
+      component: Test
+    },
+    {
       path: "/404",
       name: "NotFound",
       component: NotFound
@@ -59,5 +64,18 @@ export default new Router({
       path: "*",
       redirect: "/404"
     }
-  ]
+  ],
+  scrollBehavior: function(to, from, savedPosition) {
+    if (to.hash) {
+      // get Nav bar height
+      let yOffset = document.getElementById("bs-example-navbar-collapse-1").clientHeight;
+      console.log(yOffset);
+      return {
+        selector: to.hash,
+        offset: {x: 0, y: yOffset}
+      }
+    } else {
+      return { x: 0, y: 0 }
+    }
+  },
 })
