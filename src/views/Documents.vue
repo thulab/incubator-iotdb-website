@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="main container" style="width: 100%;height: 100%">
+    <div class="main container-fluid" style="height: 100%">
       <div class="row" style="margin: 0 0;height:90%">
         <!--sidebar part-->
         <div class="col-xs-2 sidebar" style="">
@@ -17,7 +17,7 @@
               </ul>
             </div>
           </div>
-          <div id="text-catalogue" class="content center-block" style="width: 14%;overflow: auto">
+          <div id="text-catalogue" class="content center-block" style="width: 15%;overflow: auto">
             <div v-for="item in result">
               <h5 data-toggle="collapse" :data-target="item[0].replace(/ /g, '').replace(/:/g, '')"
                   @click="change_chap_navi_content($event)" :class="item[0].slice(1)">{{item[0].slice(1).concat("▼")}}</h5>
@@ -313,6 +313,14 @@
     list-style-type: none;
     color: #eff0f8;
     margin-bottom: 5px;
+    padding: 5px;
+    max-width: 80%;
+
+  }
+  .list-group > li:hover{
+    background: grey;
+    border: 5px  grey;
+    border-radius: 5px;
   }
 
   .direct > li > a:link {
@@ -348,7 +356,7 @@
 
   .content.center-block {
     position: fixed;
-    left: 2%;
+    margin-left: 20px;
     top: 120px;
     bottom: 50px;
   }
