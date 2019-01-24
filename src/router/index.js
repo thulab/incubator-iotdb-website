@@ -41,7 +41,7 @@ export default new Router({
       component: Community
     },
     {
-      path: '/Development/:content',
+      path: '/Development',
       name: 'Development',
       component: Development
 
@@ -50,11 +50,6 @@ export default new Router({
       path: '/Example',
       name: 'Example',
       component: Example
-    },
-    {
-      path: '/Comming',
-      name: "Comming",
-      component: Comming
     },
     {
       path: "/404",

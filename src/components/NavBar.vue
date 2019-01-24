@@ -46,15 +46,8 @@
                 </li>
               </ul>
             </li>
-            <li class="dropdown">
-              <router-link to="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-haspopup="true" aria-expanded="false"><span>Development<b class="caret"></b></span>
-              </router-link>
-              <ul class="dropdown-menu">
-                <li v-for="item in Development">
-                  <router-link :to=item.url class="nav-link"><span>{{item.content}}</span></router-link>
-                </li>
-              </ul>
+            <li class="nav-item">
+              <router-link to="/Development" class="nav-link"><span>Development</span></router-link>
             </li>
             <li class="nav-item">
               <router-link to="/Example" class="nav-link"><span>Example</span></router-link>
@@ -88,11 +81,6 @@
           {"url": "/Community/Project Committers", "content": "Project Committers"},
           {"url": "/Community/History & Vision", "content": "History & Vision"}
         ],
-        "Development": [
-          {"url": "/Development/Have Questions", "content": "Have Questions"},
-          {"url": "/Development/How to contribute", "content": "How to contribute"}
-        ]
-
       }
     },
   }

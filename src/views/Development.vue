@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="container">
+      <router-link to="/Development#xxx" class="nav-link"><span>heading23</span></router-link>
       <div class="row">
-        <div class="col-sm-8" v-if="locate='Have Questions'">
-          <vue-markdown v-bind:source="development" :toc="true" :toc-anchor-link-symbol="toc"></vue-markdown>
+        <div class="col-sm-8">
+          <vue-markdown v-bind:source="development" :toc="true" :toc-anchor-link-symbol="toc" :postrender="isReadyForPrerender"></vue-markdown>
         </div>
         <my-sidebar/>
       </div>
+      <p id="xxx">123</p>
     </div>
     <br>
     <br>
@@ -21,6 +23,7 @@
   import SideBar from '../components/SideBar'
   import markdown from 'vue-markdown'
   import axios from 'axios'
+  const cheerio = require('cheerio');
 
   export default {
     name: "Development",
@@ -48,29 +51,25 @@
         return this.$route.params.content
       },
       fetchData() {
-        const dict = {
-          "Have Questions": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Development.md",
-          "How to contribute": "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Development.md"
-        };
-        const locate ={
-          "Have Questions": "#have-questions",
-          "How to contribute": "#how-to-contribute"
-        }
-        const content = this.content();
-        let url = null;
-        if (content in dict) {
-          url = dict[content];
-        } else {
-          this.$router.push('/404');
-        }
-        this.locate = content;
-        const pointer = this;
-        axios.get(url)
-          .then(function (response) {
+        let url = "https://raw.githubusercontent.com/apache/incubator-iotdb/doc/docs/Development.md";
+        let pointer = this;
+        axios.get(url).then(function (response) {
             pointer.development = response.data;
           })
-        location.href = locate[content];
-      }
+      },
+      isReadyForPrerender (html){
+        const $ = cheerio.load(html);
+
+        $('ul a').each( function(i, elem) {
+          console.log($(this).attr('href'));
+          $(this).attr('href', "#/Development"+$(this).attr('href'));
+          // $(this).attr('id', $(this).text().toLowerCase().replace(/\s/g, '') );
+        });
+        // $('h2').each( function(i, elem) {
+        //   $(this).attr('id', $(this).text().toLowerCase().replace(/\s/g, '') );
+        // });
+        return $('body').html();
+      },
     }
   }
 </script>
