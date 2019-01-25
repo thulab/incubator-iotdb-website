@@ -3,7 +3,7 @@
     <div class="main container-fluid" >
       <div class="row" style="margin: 0 0;height:90%">
         <!--sidebar part-->
-        <div class="col-xs-2 sidebar">
+        <div class="col-xs-3 sidebar">
           <div class="version text-center">
             <div class="dropdown center-block" style="width: 80%;">
               <button id="version-current" class="btn dropdown-toggle" data-toggle="dropdown" style="width: 100%">
@@ -31,7 +31,7 @@
           </div>
         </div>
         <!--content part-->
-        <div class="col-xs-10 fixed-middle">
+        <div class="col-xs-9 fixed-middle">
           <ul class="breadcrumb direct" id="bread-chapter">
             <li><a style='color:#fcac45;'>{{version}}</a></li>
             <li><a style='color:#fcac45;'>{{chapter}}</a></li>
@@ -206,9 +206,10 @@
 
 <style scoped>
   #bread-chapter{
-    margin-left: 6%;
+    margin-left: 2%;
     margin-right: 17%;
     max-width: 900px;
+    left: 25%;
   }
 
   .text-field {
@@ -216,18 +217,17 @@
     overflow-x: hidden;
     overflow-y: auto;
     top: 120px;
-    left: 20%;
+    left: 25%;
     bottom: 50px;
-    margin-left: 50px;
+    margin-left: 2%;
     margin-right: 15%;
-    max-width: 900px;
+    max-width: 1000px;
   }
-
 
   .fixed-middle {
     position: fixed;
     top: 70px;
-    left: 17%;
+    left: 24%;
   }
 
   .fixed-middle > ul {
@@ -246,25 +246,24 @@
     text-align: center;
   }
 
-  .col-xs-2 {
-    background: #222222;
-    padding: 0 0;
-  }
-
   .sidebar {
     position: fixed;
-    top: 50px;
+    top: 65px;
     bottom: 0;
     left: 0;
     z-index: 1000;
     display: block;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background: #222222;
+    padding: 0 0;
   }
 
+
+
   .dropdown {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 
   .dropdown > ul {
@@ -327,7 +326,7 @@
 
   .doc-footer{
     position: fixed;
-    width: 84%;
+    width: 76%;
     bottom: 0px;
     right: 0px;
     padding-top: 10px;
