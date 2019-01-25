@@ -259,8 +259,6 @@
     padding: 0 0;
   }
 
-
-
   .dropdown {
     margin-top: 30px;
     margin-bottom: 30px;
